@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+
+  database:
+    image: postgres:latest
+    container_name: 'postgres'
+    restart: always
+    env_file:
+      - ./env/database.env
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lin/postgresql/data
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: 'pgadmin4'
+    restart: always
+    env_file:
+      - ./env/pgadmin.env
+    ports:
+      - 5050:8080
+    volumes:
+      - data:/var/log/data
+
+
+  backend:
+    container_name: 'backend'
+    build: ./backend
+    restart: always
+    ports:
+      - 8080:8080
+    # TODO 
+
